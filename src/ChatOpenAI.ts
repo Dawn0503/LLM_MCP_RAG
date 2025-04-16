@@ -82,6 +82,12 @@ export default class ChatOpenAI {
       messages: this.messages,
       stream: true, // 启用流式传输，可以逐步获取回复
       tools: this.getToolsDefinition(), // 提供工具定义
+      max_tokens: 1024, // 设置合理的最大令牌数
+    }, {
+      headers: {
+        "HTTP-Referer": "localhost",
+        "X-Title": "MCP-Test"
+      }
     })
     
     // 用于累积完整回复内容
@@ -150,11 +156,13 @@ export default class ChatOpenAI {
     // 将工具数组转换为OpenAI API所需的格式
     return this.tools.map(tool => ({
       type: 'function' as const,
-      function: tool,
+      // OPEN AI 对function的定义是 name description parameters
+      // MCP 对 function 的 parameters 为 inputSchema
+      function: {
+        name: tool.name,
+        description: tool.description,
+        parameters: tool.inputSchema
+      },
     }))
   }
 }
-
-
-
-
