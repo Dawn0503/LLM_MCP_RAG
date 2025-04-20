@@ -18,7 +18,7 @@ export default class Agent {
 
   public async init() {
     logTitle('初始化LLM 和 TOOLS')
-    this.llm = new ChatOpenAI(this.model, this.systemPrompt)
+    // this.llm = new ChatOpenAI(this.model, this.systemPrompt)
     for (const mcpClient of this.mcpClients) {
       await mcpClient.init()
     }
@@ -44,7 +44,7 @@ export default class Agent {
           if (mcp) {
             logTitle(`TOOL USE` + toolCall.function.name)
             console.log(`Calling tool:${toolCall.function.name}`)
-            console.log(toolCall.function.arguments);
+            console.log(`Arguments: ${toolCall.function.arguments}`);
             const result = await mcp.callTool(toolCall.function.name, JSON.parse(toolCall.function.arguments)) // 入参不能直接给字符串，MCP需要解析JSON对象
             console.log(`Result: ${result}`);
             this.llm.appendToolResult(toolCall.id, JSON.stringify(result))

@@ -70,7 +70,7 @@ export default class ChatOpenAI {
    * @param prompt 用户输入的提示
    * @returns 包含AI回复内容和工具调用的对象
    */
-  async chat(prompt?: string) {
+  async chat(prompt?: string): Promise<{ content: string, toolCalls: toolCall[] }>  {
     // 打印聊天开始的标题
     logTitle('Chatting...')
     // 如果提供了提示，添加到消息历史中
@@ -83,11 +83,6 @@ export default class ChatOpenAI {
       stream: true, // 启用流式传输，可以逐步获取回复
       tools: this.getToolsDefinition(), // 提供工具定义
       max_tokens: 1024, // 设置合理的最大令牌数
-    }, {
-      headers: {
-        "HTTP-Referer": "localhost",
-        "X-Title": "MCP-Test"
-      }
     })
     
     // 用于累积完整回复内容
