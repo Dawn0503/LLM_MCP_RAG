@@ -78,19 +78,10 @@ export default class VectorStore {
    * @param b 第二个向量
    * @returns 返回两个向量的余弦相似度，范围在-1到1之间
    */
-  private cosineSimilarity(a: number[], b: number[]) {
-    // 计算两个向量的点积(dot product)
-    // 点积 = a[0]*b[0] + a[1]*b[1] + ... + a[n]*b[n]
-    const dotProduct = a.reduce((acc, val, index) => acc + val * b[index], 0)
-    
-    // 计算向量a的欧几里得范数(长度)
-    // |a| = √(a[0]² + a[1]² + ... + a[n]²)
-    const magnitudeA = Math.sqrt(a.reduce((acc, val) => acc + val * val, 0))
-    
-    // 计算向量b的欧几里得范数(长度)
-    const magnitudeB = Math.sqrt(b.reduce((acc, val) => acc + val * val, 0))
-    
-    // 计算余弦相似度: cos(θ) = (A·B)/(|A|·|B|)
-    return dotProduct / (magnitudeA * magnitudeB)
-  }
+  private cosineSimilarity(vecA: number[], vecB: number[]): number {
+    const dotProduct = vecA.reduce((sum, a, idx) => sum + a * vecB[idx], 0);
+    const normA = Math.sqrt(vecA.reduce((sum, a) => sum + a * a, 0));
+    const normB = Math.sqrt(vecB.reduce((sum, b) => sum + b * b, 0));
+    return dotProduct / (normA * normB);
+}
 }

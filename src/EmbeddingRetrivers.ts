@@ -49,6 +49,7 @@ export default class EmbeddingRetriver {
    * @returns 返回表示文档的数值向量
    */
   async embedDocument(document: string) : Promise<number[]> {
+    logTitle('EMBEDDING DOCUMENT');
     // 首先将文档转换为向量
     const embedding = await this.embed(document)
     // 然后将文档和向量一起添加到向量存储中

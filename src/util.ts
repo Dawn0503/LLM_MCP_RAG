@@ -9,12 +9,3 @@ export const logTitle = (message: string) => {
 }
 
 
-// export const logTitle = (message: string) => {
-//   const totalLength = 80;
-//   const messageLength = message.length;
-//   const leftLength = Math.floor((totalLength - messageLength) / 2);
-//   const rightLength = totalLength - messageLength - leftLength;
-//   const line = "-".repeat(leftLength) + message + "-".repeat(rightLength);
-//   console.log(chalk.green(line));
-// };
-
